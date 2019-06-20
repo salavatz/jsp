@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,12 +28,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public boolean addPerson(String name, String birth) {
+    public boolean addPerson(String name, String birth, String email, String phone) {
         Person person = new Person();
         person.setName(name);
-
-        Date date = safeParseDate(birth);
+        LocalDate date = LocalDate.parse(birth);
         person.setBirthDate(date);
+        person.setEmail(email);
+        person.setPhone(phone);
         return personDAO.addPerson(person);
     }
 

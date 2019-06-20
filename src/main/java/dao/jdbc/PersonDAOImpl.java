@@ -4,6 +4,7 @@ import dao.PersonDAO;
 import entity.Person;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,9 +19,9 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     private static final String INSERT_PERSON_SQL_TEMPLATE =
-            "insert into person (name, birth_date) values (?, ?)";
+            "insert into person (name, birth_date, email, phone) values (?, ?, ?, ?)";
     private static final String SELECT_PERSON_SQL_TEMPLATE =
-            "select id, name, birth_date from person";
+            "select id, name, birth_date, email, phone from person";
 
     @Override
     public List<Person> getList() {
@@ -31,8 +32,9 @@ public class PersonDAOImpl implements PersonDAO {
                     Person person = new Person();
                     person.setId(resultSet.getInt(1));
                     person.setName(resultSet.getString(2));
-                    Date date = new Date(resultSet.getLong(3));
-                    person.setBirthDate(date);
+                    person.setBirthDate(LocalDate.parse(resultSet.getString(3)));
+                    person.setEmail(resultSet.getString(4));
+                    person.setPhone(resultSet.getString(5));
                     result.add(person);
                 }
             }
@@ -50,8 +52,10 @@ public class PersonDAOImpl implements PersonDAO {
             if (person.getBirthDate() == null) {
                 statement.setNull(2, Types.BIGINT);
             } else {
-                statement.setLong(2, person.getBirthDate().getTime());
+                statement.setString(2, person.getBirthDate().toString());
             }
+            statement.setString(3, person.getEmail());
+            statement.setString(4, person.getPhone());
             statement.execute();
             return true;
         } catch (SQLException e) {

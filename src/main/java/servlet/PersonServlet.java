@@ -24,6 +24,8 @@ public class PersonServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("PageTitle", "New Student");
+        req.setAttribute("PageBody", "form.jsp");
         req.getRequestDispatcher("/form.jsp")
                 .forward(req, resp);
     }
@@ -33,7 +35,9 @@ public class PersonServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         String name = req.getParameter("name");
         String birth = req.getParameter("birth");
-        person.addPerson(name, birth);
+        String email = req.getParameter("email");
+        String phone = req.getParameter("phone");
+        person.addPerson(name, birth, email, phone);
 
         resp.sendRedirect(req.getContextPath() + "/person/list");
     }
