@@ -11,7 +11,6 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Birthdate</th>
                     <th scope="col">Email</th>
@@ -21,7 +20,6 @@
                 <tbody>
                 <c:forEach var="person" items="${persons}">
                     <tr>
-                        <td>${person.id}</td>
                         <td>${person.name}</td>
                         <td>${person.birthDate}</td>
                         <td>${person.email}</td>
