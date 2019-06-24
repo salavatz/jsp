@@ -15,7 +15,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Birthdate</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Person</th>
+                    <th scope="col">Phone</th>
                 </tr>
                 </thead>
                 <tbody>

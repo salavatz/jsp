@@ -1,17 +1,13 @@
 package service;
 
 import dao.PersonDAO;
+import dao.jdbc.ExtendedPersonDAOImpl;
 import dao.jdbc.PersonDAOImpl;
 import entity.Person;
 
 import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PersonServiceImpl implements PersonService {
@@ -19,7 +15,7 @@ public class PersonServiceImpl implements PersonService {
     private final PersonDAO personDAO;
 
     public PersonServiceImpl(Connection con) {
-        personDAO = new PersonDAOImpl(con);
+        personDAO = new ExtendedPersonDAOImpl(new PersonDAOImpl(con));
     }
 
     @Override
@@ -37,15 +33,4 @@ public class PersonServiceImpl implements PersonService {
         person.setPhone(phone);
         return personDAO.addPerson(person);
     }
-
-    private Date safeParseDate(String birthStr) {
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            return format.parse(birthStr);
-        } catch (ParseException e) {
-            logger.log(Level.SEVERE, "Date parsing error", e);
-            throw new RuntimeException(e);
-        }
-    }
-
 }
