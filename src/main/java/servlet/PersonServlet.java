@@ -18,7 +18,7 @@ public class PersonServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
-        person = new PersonServiceImpl(connection);
+        person = new PersonServiceImpl(connection, Strategy.FULL);
         super.init();
     }
 

@@ -15,7 +15,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Birthdate</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Person</th>
+                    <th scope="col">Phone</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,6 +31,7 @@
                 </tbody>
             </table>
             <a href="/" class="btn btn-primary">Main page</a>
+            <a href="/person/list/name-and-phone" class="btn btn-primary">Name and phone</a>
         </div>
     </jsp:attribute>
 </myTags:template>

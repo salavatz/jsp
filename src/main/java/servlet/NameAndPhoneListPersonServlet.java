@@ -13,14 +13,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/person/list", name = "personList")
-public class ListPersonServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/person/list/name-and-phone", name = "personListNameAndPhone")
+public class NameAndPhoneListPersonServlet extends HttpServlet {
     private PersonService person;
 
     @Override
     public void init() throws ServletException {
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
-        person = new PersonServiceImpl(connection, Strategy.FULL);
+        person = new PersonServiceImpl(connection, Strategy.NAME_AND_PHONE);
         super.init();
     }
 
@@ -29,7 +29,8 @@ public class ListPersonServlet extends HttpServlet {
         List<Person> res = person.getList();
         req.setAttribute("persons", res);
         req.setAttribute("PageTitle", "Students");
-        req.setAttribute("PageBody", "persons.jsp");
+        req.setAttribute("PageBody", "persons_name_phone.jsp");
         req.getRequestDispatcher("/layout.jsp").forward(req, resp);
     }
 }
+

@@ -1,25 +1,39 @@
 package service;
 
 import dao.PersonDAO;
+import dao.jdbc.GetFullPersonFields;
+import dao.jdbc.GetPersonNameAndPhone;
 import dao.jdbc.PersonDAOImpl;
 import entity.Person;
+import servlet.Strategy;
 
 import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PersonServiceImpl implements PersonService {
     private Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
-    private final PersonDAO personDAO;
+    private PersonDAO personDAO;
+    private Strategy strategy;
 
-    public PersonServiceImpl(Connection con) {
-        personDAO = new PersonDAOImpl(con);
+    public PersonServiceImpl(Connection con, Strategy strategy) {
+        if (strategy == Strategy.FULL) {
+            personDAO = new PersonDAOImpl(con, new GetFullPersonFields(con));
+        }
+        else if (strategy == Strategy.NAME_AND_PHONE){
+            personDAO = new PersonDAOImpl(con, new GetPersonNameAndPhone(con));
+        }
+    }
+
+    @Override
+    public Strategy getStrategy() {
+        return strategy;
+    }
+
+    @Override
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -36,16 +50,6 @@ public class PersonServiceImpl implements PersonService {
         person.setEmail(email);
         person.setPhone(phone);
         return personDAO.addPerson(person);
-    }
-
-    private Date safeParseDate(String birthStr) {
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            return format.parse(birthStr);
-        } catch (ParseException e) {
-            logger.log(Level.SEVERE, "Date parsing error", e);
-            throw new RuntimeException(e);
-        }
     }
 
 }
