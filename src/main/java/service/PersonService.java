@@ -11,7 +11,4 @@ public interface PersonService {
 
     boolean addPerson(String name, String birth, String email, String phone);
 
-    Strategy getStrategy();
-
-    void setStrategy(Strategy strategy);
 }

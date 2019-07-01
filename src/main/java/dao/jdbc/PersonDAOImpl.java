@@ -26,7 +26,7 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public List<Person> getList() {
-        return strategy.getList();
+        return strategy.getList(connection);
     }
 
     @Override

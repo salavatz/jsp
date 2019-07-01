@@ -11,18 +11,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GetPersonNameAndPhone extends GetPersonStrategy {
+public class GetPersonNameAndPhone implements GetPersonStrategy {
     private static Logger logger = Logger.getLogger(GetPersonNameAndPhone.class.getName());
 
     private static final String SELECT_PERSON_SQL_TEMPLATE =
             "select name, phone from person";
 
-    public GetPersonNameAndPhone(Connection con) {
-        super(con);
-    }
-
     @Override
-    public List<Person> getList() {
+    public List<Person> getList(Connection connection) {
         List<Person> result = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_PERSON_SQL_TEMPLATE)) {
             try (ResultSet resultSet = statement.executeQuery()) {

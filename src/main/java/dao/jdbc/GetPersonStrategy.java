@@ -5,12 +5,8 @@ import entity.Person;
 import java.sql.Connection;
 import java.util.List;
 
-public abstract class GetPersonStrategy {
-    protected final Connection connection;
+public interface GetPersonStrategy {
 
-    public GetPersonStrategy(Connection con) {
-        this.connection = con;
-    }
+    List<Person> getList(Connection connection);
 
-    protected abstract List<Person> getList();
 }
